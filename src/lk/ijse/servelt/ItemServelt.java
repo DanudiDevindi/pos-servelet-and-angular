@@ -21,32 +21,62 @@ public class ItemServelt  extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
+        try (PrintWriter out = resp.getWriter()) {
 
-            Connection connection = ds.getConnection();
-            Statement stm = connection.createStatement();
-            ResultSet rst = stm.executeQuery("SELECT * FROM item");
+            if (req.getParameter("code") != null) {
 
-            JsonArrayBuilder ab = Json.createArrayBuilder();
-            while (rst.next()) {
-                JsonObjectBuilder ob = Json.createObjectBuilder();
-                ob.add("code", rst.getString("code"));
-                ob.add("description", rst.getString("description"));
-                ob.add("unitPrice", rst.getString("unitPrice"));
-                ob.add("qtyOnHand", rst.getString("qtyOnHand"));
+                String code = req.getParameter("code");
 
+                try {
+                    Connection connection = ds.getConnection();
+                    PreparedStatement pstm = connection.prepareStatement("SELECT * FROM item WHERE code=?");
+                    pstm.setObject(1, code);
+                    ResultSet rst = pstm.executeQuery();
 
-                ab.add(ob.build());
+                    if (rst.next()) {
+                        JsonObjectBuilder ob = Json.createObjectBuilder();
+                        ob.add("code", rst.getString(1));
+                        ob.add("description", rst.getString(2));
+                        ob.add("unitPrice", rst.getString(3));
+                        ob.add("qtyOnHand", rst.getString(4));
+                        resp.setContentType("application/json");
+                        out.println(ob.build());
+                    } else {
+                        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                    }
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
             }
-            JsonArray customers = ab.build();
-            resp.setContentType("application/json");
-            resp.getWriter().println(customers);
+            else{
+                try {
 
-            connection.close();
-        } catch (Exception e) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            e.printStackTrace();
+                    Connection connection = ds.getConnection();
+                    Statement stm = connection.createStatement();
+                    ResultSet rst = stm.executeQuery("SELECT * FROM item");
+
+                    resp.setContentType("application/json");
+
+                    JsonArrayBuilder ab = Json.createArrayBuilder();
+
+                    while (rst.next()){
+                        JsonObjectBuilder ob = Json.createObjectBuilder();
+                        ob.add("code", rst.getString(1));
+                        ob.add("description", rst.getString(2));
+                        ob.add("unitPrice", rst.getString(3));
+                        ob.add("qtyOnHand", rst.getString(4));
+                        ab.add(ob.build());
+                    }
+                    out.println(ab.build());
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+
         }
+
     }
 
     @Override
