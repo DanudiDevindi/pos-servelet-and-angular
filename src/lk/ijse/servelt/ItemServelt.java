@@ -2,6 +2,7 @@ package lk.ijse.servelt;
 
 import javax.annotation.Resource;
 import javax.json.*;
+import javax.json.stream.JsonParsingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -69,27 +70,102 @@ public class ItemServelt  extends HttpServlet {
             pstm.setObject(1, code);
             pstm.setObject(2, description);
             pstm.setObject(3, unitPrice);
-            pstm.setObject(4,qtyOnHand);
-            boolean result = pstm.executeUpdate()>0;
+            pstm.setObject(4, qtyOnHand);
+            boolean result = pstm.executeUpdate() > 0;
 
-            if (result){
+            if (result) {
                 out.println("true");
-            }else{
+            } else {
                 out.println("false");
             }
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             out.println("false");
-        }finally {
+        } finally {
             try {
                 connection.close();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             out.close();
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String code = req.getParameter("code");
+
+        if (code!= null) {
+
+            try {
+                Connection connection = ds.getConnection();
+                PreparedStatement pstm = connection.prepareStatement("DELETE FROM item WHERE code=?");
+                pstm.setObject(1, code);
+                int affectedRows = pstm.executeUpdate();
+                if (affectedRows > 0) {
+                    resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                } else {
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                }
+            } catch (Exception ex) {
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                ex.printStackTrace();
+            }
+
+        } else {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        if (req.getParameter("code") != null){
+
+            try {
+                JsonReader reader = Json.createReader(req.getReader());
+                JsonObject item = reader.readObject();
+                System.out.println(req.getParameter("id"));
+                String code = item.getString("code");
+                String description = item.getString("description");
+                String unitPrice = item.getString("unitPrice");
+                String qtyOnHand = item.getString("qtyOnHand");
+
+                if (!code.equals(req.getParameter("code"))){
+                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                    return;
+                }
+
+                Connection connection = ds.getConnection();
+                PreparedStatement pstm = connection.prepareStatement("UPDATE item SET description=?, unitPrice=?,qtyOnHand=?  WHERE code =?");
+                pstm.setObject(4,code);
+                pstm.setObject(3,qtyOnHand);
+                pstm.setObject(2,unitPrice);
+                pstm.setObject(1,description);
+                int affectedRows = pstm.executeUpdate();
+
+                if (affectedRows > 0){
+                    resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                }else{
+                    resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                }
+
+            }catch (JsonParsingException | NullPointerException  ex){
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }catch (Exception ex){
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+
+
+        }else{
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+
+
+
+
 
 }
 
