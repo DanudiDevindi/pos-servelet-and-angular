@@ -1,0 +1,125 @@
+<app-main></app-main>
+<main id="itemDiv" role="main">
+  <div id="right-bar">
+    <div class="bg-light main-title"><br>
+      <h2><i class="fas fa-cubes"></i> Manage Items</h2>
+      <div class="front-nav-bar">
+        <!--Dashboard&ndash;&gt; <b>Items</b>-->
+      </div>
+    </div>
+    <div class="jumbotron dis content-area">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header bg-primary">Item Search</div>
+            <div class="card-body">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Input Item Code Here"
+                       id="itemId" style="margin-bottom: 2%">
+                <button class="btn btn-primary" style="margin-bottom: 2%" id="searchbtn">Search</button>
+                <input type="text" class="form-control" id="txtDescription" style="margin-bottom: 2%">
+                <input type="text" class="form-control" id="txtSPrice" style="margin-bottom: 2%">
+                <input type="text" class="form-control" id="txtSQty" style="margin-bottom: 2%">
+              </div>
+              <div class="form-group form-inline">
+
+                &nbsp;&nbsp;&nbsp;
+                <!--<select class="form-control">-->
+                <!--<option>Name</option>-->
+                <!--<option>Item Code</option>-->
+                <!--</select>-->
+              </div>
+            </div>
+          </div><br><br>
+          <div class="form-action-buttons">
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger" onclick="deleteItem()">Delete</button>
+              <button type="button" class="btn btn-warning" onclick="updateItem()">Edit</button>
+              <button type="button" class="btn btn-info">Details</button>
+              <button type="button" class="btn btn-success" onclick="ClearFields();">Clear</button>
+            </div>
+          </div><br><br>
+        </div>
+        <div class="col-lg-6 menu-button-group">
+          <div class="center-on-lg">
+            <div class="btn-group">
+              <!--<button type="button" class="btn btn-info">New Item</button>-->
+              <button type="button" class="btn btn-info nb" data-toggle="modal"
+                      data-target="#myModalItem">New Item
+              </button>
+              <button onclick="viewAllItem()" type="button" class="btn btn-warning">View All Items</button>
+            </div>
+          </div>
+        </div><br><br>
+        <table id="itemTable" class="table table-bordered">
+          <thead class="bg-info">
+          <tr>
+            <th>Item ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+          </tr>
+          </thead>
+          <tbody class="bg-light" id="tblitem">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+</main>
+
+
+
+<div class="modal fade" id="myModalItem" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" id="mode2">
+      <div class="modal-header bg-primary">
+
+        <h4 class="modal-title " style="color: white"><b>New Item</b></h4>
+
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group ">
+
+
+          <label>Code</label>
+
+          <input id="txtItemId" type="text" class="form-control">
+
+          <label>Name</label>
+
+          <input id="txtItemName" type="text" class="form-control">
+
+
+          <label>Price</label>
+          <input id="txtItemPrice" type="text" class="form-control">
+
+          <label>Quantity</label>
+          <input id="txtItemQty" type="text" class="form-control">
+
+        </div>
+        <div class="form-group ">
+
+
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <button type="button" class="btn btn-success" id="btnsaveitem"><b>Save</b></button>
+
+        <!--<button type="button" class="btn btn-primary" id="btnloaditem"><b>Add</b></button>-->
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><b>Close</b></button>
+      </div>
+    </div>
+
+  </div>
+  `
+</div>

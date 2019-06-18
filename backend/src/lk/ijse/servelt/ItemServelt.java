@@ -38,7 +38,7 @@ public class ItemServelt  extends HttpServlet {
                         ob.add("code", rst.getString(1));
                         ob.add("description", rst.getString(2));
                         ob.add("unitPrice", rst.getString(3));
-                        ob.add("qtyOnHand", rst.getString(4));
+                        ob.add("qtyOnHand", rst.getInt(4));
                         resp.setContentType("application/json");
                         out.println(ob.build());
                     } else {
@@ -66,7 +66,7 @@ public class ItemServelt  extends HttpServlet {
                         ob.add("code", rst.getString(1));
                         ob.add("description", rst.getString(2));
                         ob.add("unitPrice", rst.getString(3));
-                        ob.add("qtyOnHand", rst.getString(4));
+                        ob.add("qtyOnHand", rst.getInt(4));
                         ab.add(ob.build());
                     }
                     out.println(ab.build());
@@ -93,7 +93,7 @@ public class ItemServelt  extends HttpServlet {
             String code = item.getString("code");
             String description = item.getString("description");
             String unitPrice = item.getString("unitPrice");
-            String qtyOnHand = item.getString("qtyOnHand");
+            Integer qtyOnHand = item.getInt("qtyOnHand");
             connection = ds.getConnection();
 
             PreparedStatement pstm = connection.prepareStatement("INSERT INTO item VALUES (?,?,?,?)");
@@ -160,7 +160,7 @@ public class ItemServelt  extends HttpServlet {
                 String code = item.getString("code");
                 String description = item.getString("description");
                 String unitPrice = item.getString("unitPrice");
-                String qtyOnHand = item.getString("qtyOnHand");
+                Integer qtyOnHand = item.getInt("qtyOnHand");
 
                 if (!code.equals(req.getParameter("code"))){
                     resp.sendError(HttpServletResponse.SC_BAD_REQUEST);

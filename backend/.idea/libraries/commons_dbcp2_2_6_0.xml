@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="commons-dbcp2-2.6.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/lib/commons-dbcp2-2.6.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/commons-pool2-2.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/javax.json-1.1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/javax.json-api-1.1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/mysql-connector-java-5.1.6-bin.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

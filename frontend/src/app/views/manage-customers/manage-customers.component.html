@@ -1,0 +1,123 @@
+
+
+<app-main></app-main>
+<main id="itemDiv" role="main">
+  <div id="right-bar">
+    <div class="bg-light main-title"><br>
+      <h2 ><i class="fas fa-cubes" style="left: 50px"></i> Manage Customer</h2>
+      <div class="front-nav-bar">
+        <!--Dashboard&ndash;&gt; <b>Items</b>-->
+      </div>
+    </div>
+    <div class="jumbotron dis content-area">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header bg-primary">Customer Search</div>
+            <div class="card-body">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Input Item Code Here"
+                       id="cusId" style="margin-bottom: 2%">
+                <button class="btn btn-primary" style="margin-bottom: 2%" id="Csearchbtn">Search</button>
+                <input type="text" class="form-control" id="txtSName" style="margin-bottom: 2%">
+                <input type="text" class="form-control" id="txtSAddress" style="margin-bottom: 2%">
+                <!--<input type="text" class="form-control" id="txtSQty" style="margin-bottom: 2%">-->
+
+              </div>
+              <div class="form-group form-inline">
+
+                &nbsp;&nbsp;&nbsp;
+                <!--<select class="form-control">-->
+                <!--<option>Name</option>-->
+                <!--<option>Item Code</option>-->
+                <!--</select>-->
+              </div>
+            </div>
+          </div><br><br>
+          <div class="form-action-buttons">
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger"  id="btnDelete">Delete</button>
+              <button type="button" class="btn btn-warning" onclick="updateItem()">Edit</button>
+              <button type="button" class="btn btn-info">Details</button>
+              <button type="button" class="btn btn-success" onclick="ClearFields();">Clear</button>
+            </div>
+          </div><br><br>
+        </div>
+        <div class="col-lg-6 menu-button-group">
+          <div class="center-on-lg">
+            <div class="btn-group">
+              <!--<button type="button" class="btn btn-info">New Item</button>-->
+              <button type="button" class="btn btn-info nb" data-toggle="modal"
+                      data-target="#myModalItem">New Customer
+              </button>
+              <button onclick="viewAllCustomer()" type="button" class="btn btn-warning">View All Customer</button>
+            </div>
+          </div>
+        </div>
+        <table id="cusTable" class="table table-bordered">
+          <thead class="bg-info">
+          <tr>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Address</th>
+
+          </tr>
+          </thead>
+          <tbody class="bg-light" id="tblitem">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+</main>
+
+
+
+<div class="modal fade" id="myModalItem" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" id="mode2">
+      <div class="modal-header bg-primary">
+
+        <h4 class="modal-title " style="color: white"><b>New Item</b></h4>
+
+      </div>
+
+      <div class="modal-body">
+
+        <div class="form-group ">
+
+          <p>Customer ID
+            <input class="form-control" id="txtId">
+          </p>
+
+          <p>Customer Name
+            <input class="form-control"  id="txtName">
+          </p>
+
+          <p>Customer Address
+            <input class="form-control"  id="txtAddress">
+          </p>
+
+
+        </div>
+      </div>
+      <div class="modal-footer">
+
+
+        <button type="button" class="btn btn-primary" id="btnSave">Save Customer</button>
+
+        <!--<button type="button" class="btn btn-primary" id="btnloaditem"><b>Add</b></button>-->
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><b>Close</b></button>
+      </div>
+    </div>
+
+  </div>
+  `
+</div>
+
