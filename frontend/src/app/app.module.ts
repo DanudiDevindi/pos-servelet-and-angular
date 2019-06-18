@@ -26,6 +26,7 @@ const  routes: Routes =[
   {
     path : 'order',
     component: ManageOrdersComponent
+
   },
   {
     path: 'dashboard',
@@ -44,7 +45,7 @@ const  routes: Routes =[
 
   ],
   imports: [
-   
+   RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     FormsModule,
