@@ -16,11 +16,11 @@
             <div class="card-header bg-primary">Customer Search</div>
             <div class="card-body">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Input Item Code Here"
+                <input type="text" class="form-control" [(ngModel)]="selectedCustomer.id" placeholder="Input Item Code Here"
                        id="cusId" style="margin-bottom: 2%">
                 <button class="btn btn-primary" style="margin-bottom: 2%" id="Csearchbtn">Search</button>
-                <input type="text" class="form-control" id="txtSName" style="margin-bottom: 2%">
-                <input type="text" class="form-control" id="txtSAddress" style="margin-bottom: 2%">
+                <input type="text" class="form-control" [(ngModel)]="selectedCustomer.name" id="txtSName" style="margin-bottom: 2%">
+                <input type="text" class="form-control" [(ngModel)]="selectedCustomer.address" id="txtSAddress" style="margin-bottom: 2%">
                 <!--<input type="text" class="form-control" id="txtSQty" style="margin-bottom: 2%">-->
 
               </div>
@@ -50,9 +50,9 @@
               <button type="button" class="btn btn-info nb" data-toggle="modal"
                       data-target="#myModalItem">New Customer
               </button>
-              <button onclick="viewAllCustomer()" type="button" class="btn btn-warning">View All Customer</button>
+              <button (click)="getAllCustomers()"  type="button" class="btn btn-warning">View All Customer</button>
             </div>
-          </div>
+          </div><br>
         </div>
         <table id="cusTable" class="table table-bordered">
           <thead class="bg-info">
@@ -60,13 +60,38 @@
             <th>Customer ID</th>
             <th>Name</th>
             <th>Address</th>
-
+            <th></th>
           </tr>
           </thead>
           <tbody class="bg-light" id="tblitem">
-
+          <tr *ngFor="let customer of cus" (click)="tableRow_Click(customer)">
+            <td>{{customer.id}} </td>
+            <td> {{customer.name}}</td>
+            <td> {{customer.address}}</td>
+            <td>
+              <i (click)="deleteCustomer(customer.id)" class="fa fa-trash fa-2x"></i>
+              <button style="background-color: red" (click)="deleteCustomer(customer.id)"> delete</button>
+            </td>
+          </tr>
           </tbody>
         </table>
+        <!--<table class="table table-hover">-->
+          <!--<thead class="table-bordered">-->
+          <!--<tr>-->
+            <!--<td>ID</td>-->
+            <!--<td>Name</td>-->
+            <!--<td>Address</td>-->
+          <!--</tr>-->
+          <!--</thead>-->
+          <!--<tbody>-->
+          <!--<tr *ngFor="let customer of cus">-->
+            <!--<td>{{customer.id}}</td>-->
+            <!--<td>{{customer.name}}</td>-->
+            <!--<td>{{customer.address}}</td>-->
+
+          <!--</tr>-->
+          <!--</tbody>-->
+        <!--</table>-->
       </div>
     </div>
 
@@ -77,10 +102,12 @@
 
 
 <div class="modal fade" id="myModalItem" role="dialog">
+  <form (ngSubmit)="saveCustomer()" #frmCustomer="ngForm">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content" id="mode2">
+
       <div class="modal-header bg-primary">
 
         <h4 class="modal-title " style="color: white"><b>New Item</b></h4>
@@ -92,15 +119,15 @@
         <div class="form-group ">
 
           <p>Customer ID
-            <input class="form-control" id="txtId">
+            <input #txtId name="txtId" [(ngModel)]="selectedCustomer.id" class="form-control" type="text" required pattern="^C\d{3}$">
           </p>
 
           <p>Customer Name
-            <input class="form-control"  id="txtName">
+            <input name="txtName" class="form-control" type="text" [(ngModel)]="selectedCustomer.name" required pattern="\w{4}.+">
           </p>
 
           <p>Customer Address
-            <input class="form-control"  id="txtAddress">
+            <input name="txtAddress" class="form-control" type="text" [(ngModel)]="selectedCustomer.address" required pattern="\w{4}.+">
           </p>
 
 
@@ -109,7 +136,7 @@
       <div class="modal-footer">
 
 
-        <button type="button" class="btn btn-primary" id="btnSave">Save Customer</button>
+        <button type="submit" class="btn btn-primary" id="btnSave">Save Customer</button>
 
         <!--<button type="button" class="btn btn-primary" id="btnloaditem"><b>Add</b></button>-->
 
@@ -118,6 +145,6 @@
     </div>
 
   </div>
-  `
+    `</form>
 </div>
 

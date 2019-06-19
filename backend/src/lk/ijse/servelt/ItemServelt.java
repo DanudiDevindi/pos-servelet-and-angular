@@ -49,8 +49,7 @@ public class ItemServelt  extends HttpServlet {
                     ex.printStackTrace();
                 }
 
-            }
-            else{
+            } else {
                 try {
 
                     Connection connection = ds.getConnection();
@@ -61,7 +60,7 @@ public class ItemServelt  extends HttpServlet {
 
                     JsonArrayBuilder ab = Json.createArrayBuilder();
 
-                    while (rst.next()){
+                    while (rst.next()) {
                         JsonObjectBuilder ob = Json.createObjectBuilder();
                         ob.add("code", rst.getString(1));
                         ob.add("description", rst.getString(2));
@@ -70,14 +69,15 @@ public class ItemServelt  extends HttpServlet {
                         ab.add(ob.build());
                     }
                     out.println(ab.build());
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+
             }
-
         }
-
     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -20,96 +20,98 @@ public class CustomerServelt extends HttpServlet {
         @Resource(name = "java:comp/env/jdbc/pool")
         private DataSource ds;
 
-//        @Override
-//        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//            try {
-//
-//
-//                Connection connection = ds.getConnection();
-//                Statement stm = connection.createStatement();
-//                ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
-//
-//                JsonArrayBuilder ab = Json.createArrayBuilder();
-//                while (rst.next()) {
-//                    JsonObjectBuilder ob = Json.createObjectBuilder();
-//                    ob.add("id", rst.getString("id"));
-//                    ob.add("name", rst.getString("name"));
-//                    ob.add("address", rst.getString("address"));
-//
-//                    ab.add(ob.build());
-//                }
-//                JsonArray customers = ab.build();
-//                resp.setContentType("application/json");
-//                resp.getWriter().println(customers);
-//
-//                connection.close();
-//            } catch (Exception e) {
-//                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-//                e.printStackTrace();
-//            }
-//        }
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+            try {
 
 
+                Connection connection = ds.getConnection();
+                Statement stm = connection.createStatement();
+                ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+                JsonArrayBuilder ab = Json.createArrayBuilder();
+                while (rst.next()) {
+                    JsonObjectBuilder ob = Json.createObjectBuilder();
+                    ob.add("id", rst.getString("id"));
+                    ob.add("name", rst.getString("name"));
+                    ob.add("address", rst.getString("address"));
 
-        try (PrintWriter out = resp.getWriter()) {
-
-            if (req.getParameter("id") != null) {
-
-                String id = req.getParameter("id");
-
-                try {
-                   Connection connection = ds.getConnection();
-                    PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
-                    pstm.setObject(1, id);
-                    ResultSet rst = pstm.executeQuery();
-
-                    if (rst.next()) {
-                        JsonObjectBuilder ob = Json.createObjectBuilder();
-                        ob.add("id", rst.getString(1));
-                        ob.add("name", rst.getString(2));
-                        ob.add("address", rst.getString(3));
-                        resp.setContentType("application/json");
-                        out.println(ob.build());
-                    } else {
-                        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-                    }
-
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                    ab.add(ob.build());
                 }
+                JsonArray customers = ab.build();
+                resp.setContentType("application/json");
+                resp.getWriter().println(customers);
 
+                connection.close();
+            } catch (Exception e) {
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                e.printStackTrace();
             }
-            else{
-                try {
-
-                    Connection connection = ds.getConnection();
-                    Statement stm = connection.createStatement();
-                    ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
-
-                    resp.setContentType("application/json");
-
-                    JsonArrayBuilder ab = Json.createArrayBuilder();
-
-                    while (rst.next()){
-                        JsonObjectBuilder ob = Json.createObjectBuilder();
-                        ob.add("id",rst.getString("id"));
-                        ob.add("name",rst.getString("name"));
-                        ob.add("address",rst.getString("address"));
-                        ab.add(ob.build());
-                    }
-                    out.println(ab.build());
-                }catch (Exception ex){
-                    ex.printStackTrace();
-                }
-            }
-
         }
 
-    }
+
+
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//
+//
+//        try (PrintWriter out = resp.getWriter()) {
+//
+//            if (req.getParameter("id") != null) {
+//
+//                String id = req.getParameter("id");
+//
+//                try {
+//                     Connection connection = ds.getConnection();
+//                    PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
+//                    pstm.setObject(1, id);
+//                    ResultSet rst = pstm.executeQuery();
+//
+//                    if (rst.next()) {
+//                        JsonObjectBuilder ob = Json.createObjectBuilder();
+//                        ob.add("id", rst.getString(1));
+//                        ob.add("name", rst.getString(2));
+//                        ob.add("address", rst.getString(3));
+//                        resp.setContentType("application/json");
+//                        out.println(ob.build());
+//                    } else {
+//                        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+//                    }
+//
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//
+//            }
+//            else{
+//                try {
+//                    Connection connection = ds.getConnection();
+//                    Statement stm = connection.createStatement();
+//                    ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
+//
+//                    resp.setContentType("application/json");
+//
+//                    JsonArrayBuilder ab = Json.createArrayBuilder();
+//
+//                    while (rst.next()){
+//                        JsonObjectBuilder ob = Json.createObjectBuilder();
+//                        ob.add("id",rst.getString("id"));
+//                        ob.add("name",rst.getString("name"));
+//                        ob.add("address",rst.getString("address"));
+//                        ab.add(ob.build());
+//                    }
+//                    out.println(ab.build());
+//                }catch (Exception ex){
+//                    ex.printStackTrace();
+//                }
+//            }
+//
+//        }
+//
+//
+//    }
 
 
     @Override
@@ -161,7 +163,7 @@ public class CustomerServelt extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        System.out.println("working" + req.getParameter("id"));
             String id = req.getParameter("id");
 
         if (id != null){
