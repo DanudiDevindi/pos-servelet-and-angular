@@ -14,12 +14,12 @@
             <div class="card-header bg-primary">Item Search</div>
             <div class="card-body">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Input Item Code Here"
+                <input type="text" class="form-control" [(ngModel)]="selectedItem.code" placeholder="Input Item Code Here"
                        id="itemId" style="margin-bottom: 2%">
                 <button class="btn btn-primary" style="margin-bottom: 2%" id="searchbtn">Search</button>
-                <input type="text" class="form-control" id="txtDescription" style="margin-bottom: 2%">
-                <input type="text" class="form-control" id="txtSPrice" style="margin-bottom: 2%">
-                <input type="text" class="form-control" id="txtSQty" style="margin-bottom: 2%">
+                <input type="text" class="form-control" [(ngModel)]="selectedItem.description" id="txtDescription" style="margin-bottom: 2%">
+                <input type="text" class="form-control" [(ngModel)]="selectedItem.unitPrice" id="txtSPrice" style="margin-bottom: 2%">
+                <input type="text" class="form-control"  [(ngModel)]="selectedItem.qtyOnHand" id="txtSQty" style="margin-bottom: 2%">
               </div>
               <div class="form-group form-inline">
 
@@ -47,7 +47,7 @@
               <button type="button" class="btn btn-info nb" data-toggle="modal"
                       data-target="#myModalItem">New Item
               </button>
-              <button onclick="viewAllItem()" type="button" class="btn btn-warning">View All Items</button>
+              <button (click)="getAllItems()" type="button" class="btn btn-warning">View All Items</button>
             </div>
           </div>
         </div><br><br>
@@ -58,10 +58,20 @@
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th> </th>
           </tr>
           </thead>
           <tbody class="bg-light" id="tblitem">
-
+          <tr *ngFor="let itemss of ite" (click)="tableRow_Click_Item(itemss)">
+            <td>{{itemss.code}}</td>
+            <td>{{itemss.description}}</td>
+            <td>{{itemss.unitPrice}}</td>
+            <td>{{itemss.qtyOnHand}}</td>
+            <td>
+              <i (click)="deleteItem(itemss.code)" class="fa fa-trash fa-2x"></i>
+              <button style="background-color: red" (click)="deleteItem(itemss.code)"> delete</button>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -74,10 +84,12 @@
 
 
 <div class="modal fade" id="myModalItem" role="dialog">
+  <form (ngSubmit)="saveItems()" #frmItem="ngForm">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content" id="mode2">
+
       <div class="modal-header bg-primary">
 
         <h4 class="modal-title " style="color: white"><b>New Item</b></h4>
@@ -88,20 +100,36 @@
         <div class="form-group ">
 
 
-          <label>Code</label>
+          <!--<label>Code</label>-->
 
-          <input id="txtItemId" type="text" class="form-control">
+          <!--<input #txtcode id="txtItemId" [(ngModel)]="selectedItem.code" type="text" class="form-control">-->
 
-          <label>Name</label>
+          <!--<label>Name</label>-->
 
-          <input id="txtItemName" type="text" class="form-control">
+          <!--<input id="txtItemName" [(ngModel)]="selectedItem.description" type="text" class="form-control">-->
 
 
-          <label>Price</label>
-          <input id="txtItemPrice" type="text" class="form-control">
+          <!--<label>Price</label>-->
+          <!--<input id="txtItemPrice" [(ngModel)]="selectedItem.unitPrice" type="text" class="form-control">-->
 
-          <label>Quantity</label>
-          <input id="txtItemQty" type="text" class="form-control">
+          <p>Item Code
+            <input #txtcode name="txtId" [(ngModel)]="selectedItem.code" class="form-control" type="text">
+          </p>
+
+          <p> Item Discription
+            <input name="txtName" class="form-control" type="text" [(ngModel)]="selectedItem.description">
+          </p>
+
+          <p>Price
+            <input name="txtAddress" class="form-control" type="text" [(ngModel)]="selectedItem.unitPrice">
+          </p>
+
+          <p>Quantity
+            <input name="txtAddress" class="form-control" type="text" [(ngModel)]="selectedItem.qtyOnHand">
+          </p>
+
+          <!--<label>Quantity</label>-->
+          <!--<input id="txtItemQty" [(ngModel)]="selectedItem.qtyOnHand" type="text" class="form-control">-->
 
         </div>
         <div class="form-group ">
@@ -112,14 +140,15 @@
       <div class="modal-footer">
 
 
-        <button type="button" class="btn btn-success" id="btnsaveitem"><b>Save</b></button>
+        <button  type="submit" class="btn btn-success" id="btnsaveitem"><b>Save</b></button>
 
         <!--<button type="button" class="btn btn-primary" id="btnloaditem"><b>Add</b></button>-->
 
         <button type="button" class="btn btn-danger" data-dismiss="modal"><b>Close</b></button>
       </div>
+
     </div>
 
   </div>
-  `
+    `</form>
 </div>

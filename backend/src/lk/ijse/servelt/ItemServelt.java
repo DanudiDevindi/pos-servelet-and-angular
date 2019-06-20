@@ -21,60 +21,102 @@ public class ItemServelt  extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        try (PrintWriter out = resp.getWriter()) {
+//
+//            if (req.getParameter("code") != null) {
+//
+//                String code = req.getParameter("code");
+//
+//                try {
+//                    Connection connection = ds.getConnection();
+//                    PreparedStatement pstm = connection.prepareStatement("SELECT * FROM item WHERE code=?");
+//                    pstm.setObject(1, code);
+//                    ResultSet rst = pstm.executeQuery();
+//
+//                    if (rst.next()) {
+//                        JsonObjectBuilder ob = Json.createObjectBuilder();
+//                        ob.add("code", rst.getString(1));
+//                        ob.add("description", rst.getString(2));
+//                        ob.add("unitPrice", rst.getString(3));
+//                        ob.add("qtyOnHand", rst.getInt(4));
+//                        resp.setContentType("application/json");
+//                        out.println(ob.build());
+//                    } else {
+//                        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+//                    }
+//
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//
+//            } else {
+//                try {
+//
+//                    Connection connection = ds.getConnection();
+//                    Statement stm = connection.createStatement();
+//                    ResultSet rst = stm.executeQuery("SELECT * FROM item");
+//
+//                    resp.setContentType("application/json");
+//
+//                    JsonArrayBuilder ab = Json.createArrayBuilder();
+//
+//                    while (rst.next()) {
+//                        JsonObjectBuilder ob = Json.createObjectBuilder();
+//                        ob.add("code", rst.getString(1));
+//                        ob.add("description", rst.getString(2));
+//                        ob.add("unitPrice", rst.getString(3));
+//                        ob.add("qtyOnHand", rst.getInt(4));
+//                        ab.add(ob.build());
+//                    }
+//                    out.println(ab.build());
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//
+//            }
+//        }
+
+
+
         try (PrintWriter out = resp.getWriter()) {
 
-            if (req.getParameter("code") != null) {
+            resp.setContentType("application/json");
 
-                String code = req.getParameter("code");
+            try {
+                Connection connection = ds.getConnection();
 
-                try {
-                    Connection connection = ds.getConnection();
-                    PreparedStatement pstm = connection.prepareStatement("SELECT * FROM item WHERE code=?");
-                    pstm.setObject(1, code);
-                    ResultSet rst = pstm.executeQuery();
+                Statement stm = connection.createStatement();
+                ResultSet rst = stm.executeQuery("SELECT * FROM Item");
 
-                    if (rst.next()) {
-                        JsonObjectBuilder ob = Json.createObjectBuilder();
-                        ob.add("code", rst.getString(1));
-                        ob.add("description", rst.getString(2));
-                        ob.add("unitPrice", rst.getString(3));
-                        ob.add("qtyOnHand", rst.getInt(4));
-                        resp.setContentType("application/json");
-                        out.println(ob.build());
-                    } else {
-                        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-                    }
+                JsonArrayBuilder items = Json.createArrayBuilder();
 
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                while (rst.next()){
+                    String code = rst.getString("code");
+                    String description = rst.getString("description");
+                    String unitPrice = rst.getString("unitPrice");
+                    int qtyOnHand = rst.getInt("qtyOnHand");
+
+
+                    JsonObject item = Json.createObjectBuilder()
+                            .add("code", code)
+                            .add("description", description)
+                            .add("unitPrice",unitPrice)
+                            .add("qtyOnHand", qtyOnHand)
+                            .build();
+                    items.add(item);
                 }
 
-            } else {
-                try {
+                out.println(items.build().toString());
 
-                    Connection connection = ds.getConnection();
-                    Statement stm = connection.createStatement();
-                    ResultSet rst = stm.executeQuery("SELECT * FROM item");
-
-                    resp.setContentType("application/json");
-
-                    JsonArrayBuilder ab = Json.createArrayBuilder();
-
-                    while (rst.next()) {
-                        JsonObjectBuilder ob = Json.createObjectBuilder();
-                        ob.add("code", rst.getString(1));
-                        ob.add("description", rst.getString(2));
-                        ob.add("unitPrice", rst.getString(3));
-                        ob.add("qtyOnHand", rst.getInt(4));
-                        ab.add(ob.build());
-                    }
-                    out.println(ab.build());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
+                connection.close();
+            } catch (Exception ex) {
+                resp.sendError(500, ex.getMessage());
+                ex.printStackTrace();
             }
+
         }
+
+
     }
 
 
