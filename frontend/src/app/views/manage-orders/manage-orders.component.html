@@ -13,13 +13,13 @@
         </div>
         <br><br>
         <div class="card-body">
-          <form #frmItems="ngForm" (ngSubmit)="addOrder()" class="needs-validation" novalidate>
+          <form #frmItems="ngForm"  class="needs-validation" novalidate>
             <div class="row">
               <div class="col-md-2">
                 <label for="countrys">Customer Name</label>
                 <select (change)="searchCustomer($event)" class="custom-select d-block w-100" id="countrys" required>
-                  <option value="">select...</option>
-                  <option *ngFor="let customer of customers"> {{customer.id}}</option>
+                  <option value="" >select...</option>
+                  <option *ngFor="let customer of cus">{{customer.id}}</option>
                 </select>
               </div>
 
@@ -27,7 +27,7 @@
               <div class="col-md-3 mb-3">
                 <label for="customerName">Customer Name</label>
                 <input type="text" class="form-control" id="customerName" placeholder="" name="name"
-                       [(ngModel)]="serchedCustomers.name" required>
+                       [(ngModel)]="selectedCustomer1.name"          required>
 
               </div>
 
@@ -49,7 +49,7 @@
 
             </div>
 
-            <form #frmItem="ngForm">
+            <form>
 
 
               <div class="row">
@@ -57,23 +57,23 @@
 
                 <div class="col-md-2 mb-3">
                   <label for="code">Item Code</label>
-                  <select (change)="searchItems($event)" class="custom-select d-block w-100" id="code" name="code" required>
-                    <option value="">select...</option>
-                    <option *ngFor="let item of items">{{item.code}}</option>
+                  <select  (change)="searchItem($event)" class="custom-select d-block w-100" id="code" name="code" required>
+                    <option value=""  >select...</option>
+                    <option *ngFor="let itemss of ite">{{itemss.code}}</option>
                   </select>
                 </div>
 
                 <div class="col-md-3 mb-3">
                   <label for="Discription">Item Discription</label>
                   <input type="text" class="form-control" id="Discription" placeholder="" name="code"
-                         [(ngModel)]="serchedItems.discription" required>
+                         [(ngModel)]="selectedItem1.description"  required>
 
                 </div>
 
                 <div class="col-md-2 mb-3">
                   <label for="unicprice">Unic Price</label>
                   <input type="text" class="form-control" id="unicprice" placeholder="" name="unicPrice"
-                         [(ngModel)]="serchedItems.unicPrice" required>
+                         [(ngModel)]="selectedItem1.unitPrice"  required>
 
                 </div>
 
@@ -81,7 +81,7 @@
                 <div class="col-md-2 mb-3">
                   <label for="Qty On Hand">Qty On Hand</label>
                   <input type="text" class="form-control" id="Qty On Hand" placeholder="" name="qtyonhand"
-                         [(ngModel)]="serchedItems.qtyOnHand" required>
+                         [(ngModel)]="selectedItem1.qtyOnHand" required>
 
 
                 </div>
@@ -96,7 +96,7 @@
 
                 </div>
                 <div class="card-body button">
-                  <button class="btn btn-info " (click)="SelectOrderDetails()">Add To Cart</button>
+                  <button class="btn btn-info ">Add To Cart</button>
                 </div>
               </div>
 
