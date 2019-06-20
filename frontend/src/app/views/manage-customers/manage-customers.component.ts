@@ -78,4 +78,22 @@ export class ManageCustomersComponent implements OnInit {
       );
     }
   }
+  updateCustomer(): void {
+
+    if (!this.frmCustomer.invalid) {
+
+      this.customerservice.updateCustomer(this.selectedCustomer)
+        .subscribe(resp => {
+          this.cus.push(this.selectedCustomer);
+          if (!resp) {
+            alert('Customer has been updated successfully');
+          } else {
+            alert('Failed to updated the Customer');
+          }
+        });
+
+    } else {
+      alert('Invalid Data, Please Correct...!');
+    }
+  }
 }

@@ -29,4 +29,9 @@ export class ItemService {
   deleteItem(code: string): Observable<boolean> {
     return this.http.delete<boolean>(this.baseUrl1+ code);
   }
+
+  updateItems(item: itemdto): Observable<boolean>{
+    console.log(item);
+    return this.http.put<boolean>(this.baseUrl1+item.code, item);
+  }
 }

@@ -31,6 +31,7 @@ export class ManageItemsComponent implements OnInit {
   }
 
   saveItems(): void {
+
     if (!this.frmItem.invalid) {
 
       this.itemservice.saveItems(this.selectedItem)
@@ -71,5 +72,23 @@ export class ManageItemsComponent implements OnInit {
     }
   }
 
+  updateItems(): void {
+
+    if (!this.frmItem.invalid) {
+
+      this.itemservice.updateItems(this.selectedItem)
+        .subscribe(resp => {
+          if (!resp) {
+            alert('Item has been updated successfully');
+            this.ite.push(this.selectedItem);
+          } else {
+            alert('Failed to updated the item');
+          }
+        });
+
+    } else {
+      alert('Invalid Data, Please Correct...!');
+    }
+  }
 
 }

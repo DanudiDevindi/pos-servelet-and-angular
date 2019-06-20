@@ -8,8 +8,10 @@
       </div>
     </div>
     <div class="jumbotron dis content-area">
+
       <div class="row">
         <div class="col-lg-6">
+
           <div class="card">
             <div class="card-header bg-primary">Item Search</div>
             <div class="card-body">
@@ -34,11 +36,12 @@
           <div class="form-action-buttons">
             <div class="btn-group">
               <button type="button" class="btn btn-danger" onclick="deleteItem()">Delete</button>
-              <button type="button" class="btn btn-warning" onclick="updateItem()">Edit</button>
+              <button type="button" class="btn btn-warning" (click)="updateItems()">Edit</button>
               <button type="button" class="btn btn-info">Details</button>
               <button type="button" class="btn btn-success" onclick="ClearFields();">Clear</button>
             </div>
           </div><br><br>
+
         </div>
         <div class="col-lg-6 menu-button-group">
           <div class="center-on-lg">

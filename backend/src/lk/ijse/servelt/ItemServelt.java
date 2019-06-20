@@ -94,7 +94,7 @@ public class ItemServelt  extends HttpServlet {
                     String code = rst.getString("code");
                     String description = rst.getString("description");
                     String unitPrice = rst.getString("unitPrice");
-                    int qtyOnHand = rst.getInt("qtyOnHand");
+                    String qtyOnHand = String.valueOf((rst.getInt("qtyOnHand")));
 
 
                     JsonObject item = Json.createObjectBuilder()
@@ -135,7 +135,7 @@ public class ItemServelt  extends HttpServlet {
             String code = item.getString("code");
             String description = item.getString("description");
             String unitPrice = item.getString("unitPrice");
-            Integer qtyOnHand = item.getInt("qtyOnHand");
+            Integer qtyOnHand = Integer.parseInt(item.getString("qtyOnHand"));
             connection = ds.getConnection();
 
             PreparedStatement pstm = connection.prepareStatement("INSERT INTO item VALUES (?,?,?,?)");
@@ -202,7 +202,7 @@ public class ItemServelt  extends HttpServlet {
                 String code = item.getString("code");
                 String description = item.getString("description");
                 String unitPrice = item.getString("unitPrice");
-                Integer qtyOnHand = item.getInt("qtyOnHand");
+                Integer qtyOnHand = Integer.parseInt(item.getString("qtyOnHand"));
 
                 if (!code.equals(req.getParameter("code"))){
                     resp.sendError(HttpServletResponse.SC_BAD_REQUEST);

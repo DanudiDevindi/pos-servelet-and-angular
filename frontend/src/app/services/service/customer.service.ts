@@ -31,5 +31,9 @@ export class CustomerService {
   deleteCustomer(id: string): Observable<boolean> {
     return this.http.delete<boolean>(this.baseUrl1+ id);
   }
+  updateCustomer(customer: customerdto):Observable<boolean>{
+    console.log(customer);
+    return this.http.put<boolean>(this.baseUrl1+customer.id, customer);
+  }
 
 }
